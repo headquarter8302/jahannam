@@ -1,0 +1,14 @@
+{
+  "name": "jahannam",
+  "module": "index.js",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "jsdoc": "4.0.5"
+  }
+}

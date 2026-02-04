@@ -91,7 +91,6 @@
 						return error('[Jahannam] Request error: ' + reason);
 					});
 			},
-
 			/**
 			 * Creates a URL with the given kv pair of URL parameters
 			 *
