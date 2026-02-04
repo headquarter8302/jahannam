@@ -2,7 +2,7 @@
  * @name	Jahannam
  * @author	Headquarter8302
  * @description	Library for interacting with the Nirvana backend, a.k.a `wikia.php`
- * @license	MIT Attribution to Caburum for the Nirvana docs (https://caburum.fandom.com/wiki/Nirvana)
+ * @license	MIT - CC-BY-SA 3.0 Caburum for the Nirvana docs (https://caburum.fandom.com/wiki/Nirvana)
  * <nowiki>
  */
 
