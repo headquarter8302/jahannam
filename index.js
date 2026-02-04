@@ -9,10 +9,7 @@
 ; (function (window, mw) {
 	console.log("[Jahannam] v0");
 
-	/**
-	 * TODO: delete on release
-	 * @param {any} msg
-	 */
+	/** @param {any} msg */
 	function debug(msg) {
 		console.debug(`[Jahannam] ${msg}`);
 	}
@@ -39,11 +36,15 @@
 	debug("Initializing...");
 
 	Object.assign(window.dev.jahannam, {
-		/** @namespace */
+		/**
+		 * Holds the configuration for the script. Will be overwritten by an existing object
+		 * @namespace
+		 */
 		cfg: {
+			wikiId: mw.config.get('wgWikiID'),
 			endpoints: Object.assign({
 				wikia: new URL('https://'
-					.concat(mw.config.get('wgWikiID'))
+					.concat(window.dev.jahannam.cfg.wikiId)
 					.concat('.fandom.com/wikia.php')),
 				service: new URL('https://services.fandom.com'),
 			}, window.dev.jahannam.cfg.endpoints || {}),
@@ -56,6 +57,7 @@
 		util: {
 			/**
 			 * GETs a given URL
+			 *
 			 * @async
 			 * @param {Object} opts
 			 * @param {URL} [opts.url=window.dev.jahannam.cfg.endpoints.wikia]
@@ -66,7 +68,12 @@
 			 * @returns {Promise<false | any> | false}
 			 */
 			get: function (opts) {
-				if (!opts || !opts.controller || !opts.method) return error("[Jahannam] Invalid parameter on 'get()'");
+				if (
+					!opts
+					|| !opts.controller
+					|| !opts.method
+				) return error("[Jahannam] Invalid parameter on 'get()'");
+
 				const url = opts.url || window.dev.jahannam.cfg.endpoints.wikia;
 				const controller = opts.controller;
 				const method = opts.method;
@@ -96,6 +103,7 @@
 			 *
 			 * @param {URL} baseURL
 			 * @param {Record<string, string | Record<string, string>>} [paramPair={}]
+			 * @returns {URL}
 			 */
 			createURL(baseURL, paramPair = {}) {
 				const url = new URL(baseURL);
@@ -112,11 +120,13 @@
 		},
 		/**
 		 * Fandom\FeedsAndPosts\Discussion\DiscussionPost
+		 *
 		 * @namespace
 		 */
 		DiscussionPost: {
 			/**
 			 * Gets information of a specific post by its ID
+			 *
 			 * @method getPost
 			 * @param {number} postId
 			 */
@@ -130,11 +140,13 @@
 		},
 		/**
 		 * UserProfile
+		 *
 		 * @namespace
 		 */
 		UserProfile: {
 			/**
 			 * A user's special pages on the wiki, their avatar, their edit and post count, whether they are blocked
+			 *
 			 * @method getUserData
 			 * @param {number} userId
 			 */

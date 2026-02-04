@@ -45,11 +45,12 @@ declare namespace Jahannam {
 
 	interface Runtime {
 		cfg: {
+			wikiId: string
 			endpoints: {
 				wikia: URL
 				service: URL
 			}
-			/** Null for anonymous users */
+			/** `null` for anonymous users */
 			username: string | null
 		}
 
