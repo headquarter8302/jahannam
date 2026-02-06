@@ -158,23 +158,41 @@
 			/**
 			 * Returns wiki metadata
 			 * @method getWikis
-			 * @param {number} limit return results for at most this number of wikis (int, default 100)
+			 * @param {number} [limit=100] return results for at most this number of wikis (int, default 100)
 			 * @param {number} [after_wiki_id] return results for wikis with a greater id (optional, int)
+			 * @returns {import('./index.d.ts').Jahannam.DWDimensionApi.GetWikisReturnType}
 			 */
 			getWikis: function (limit = 100, after_wiki_id) {
 				/** @type {Record<string, string>} */
 				const params = {
 					'limit': limit.toString(),
 				};
-
 				if (after_wiki_id) params['after_wiki_id'] = after_wiki_id.toString();
-
 				return window.dev.jahannam.util.get({
 					controller: 'DWDimensionApi',
 					method: 'getWikis',
 					parameters: params
 				});
-			}
+			},
+			/**
+			 * Returns user data
+			 * @method getUsers
+			 * @param {number} [limit=100] return results for at most this many results (int, default 100)
+			 * @param {number} [after_user_id] return results after this id (optional, int)
+			 * @returns {import('./index.d.ts').Jahannam.DWDimensionApi.GetUsersReturnType}
+			 */
+			getUsers: function (limit = 100, after_user_id) {
+				/** @type {Record<string, string>} */
+				const params = {
+					'limit': limit.toString(),
+				};
+				if (after_user_id) params['after_user_id'] = after_user_id.toString();
+				return window.dev.jahannam.util.get({
+					controller: 'DWDimensionApi',
+					method: 'getUsers',
+					parameters: params
+				});
+			},
 		}
 	});
 

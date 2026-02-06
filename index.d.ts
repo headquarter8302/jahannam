@@ -19,6 +19,8 @@ declare global {
 
 export declare namespace Jahannam {
 	type APIReturnType<T = any> = Promise<false | T>
+	/** what the heck */
+	type APIBoolString = '0' | '1'
 
 	namespace Util {
 		interface GetOptions {
@@ -91,6 +93,50 @@ export declare namespace Jahannam {
 			limit: number
 			after_wiki_id?: number
 		}
+
+		interface GetUsersParameters {
+			limit: number
+			after_wiki_id?: number
+		}
+
+		type GetWikisReturnType = APIReturnType<{
+			cluster: string
+			created_at: string
+			dbname: string
+			deleted: string
+			domain: string
+			/** TODO */
+			fc_community_id: unknown
+			founding_user_id: string
+			is_kid_wiki: APIBoolString
+			is_kid_wiki_by_founder: APIBoolString
+			is_kid_wiki_by_staff: APIBoolString
+			is_monetized: APIBoolString
+			is_test_wiki: APIBoolString
+			lang: string
+			lang_id: string
+			public: APIBoolString
+			sitename: string
+			title: string
+			/** Warning: Might or might not be `http` instead of `https` */
+			url: string
+			vertical_id: string
+			vertical_name: string
+			wiki_id: string
+			wiki_manager: string
+		}[]>
+
+		type GetUsersReturnType = APIReturnType<{
+			is_bot: boolean
+			is_bot_global: boolean
+			user_editcount: string
+			user_email_authenticated: string
+			user_id: string
+			user_marketingallowed: boolean
+			user_name: string
+			user_real_name: string
+			user_registration: string
+		}>
 	}
 
 	interface Runtime {
@@ -123,6 +169,7 @@ export declare namespace Jahannam {
 
 		DWDimensionApi: {
 			getWikis(limit: number, after_wiki_id?: number): APIReturnType
+			getUsers(limit: number, after_wiki_id?: number): APIReturnType
 		}
 	}
 }
