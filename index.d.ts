@@ -43,6 +43,13 @@ declare namespace Jahannam {
 		}
 	}
 
+	namespace DWDimensionApi {
+		interface GetWikisParameters {
+			limit: number
+			after_wiki_id?: number
+		}
+	}
+
 	interface Runtime {
 		cfg: {
 			cityId: string
@@ -69,6 +76,10 @@ declare namespace Jahannam {
 
 		UserProfile: {
 			getUserData(userId: number): APIReturnType
+		}
+
+		DWDimensionApi: {
+			getWikis(limit: number, after_wiki_id?: number): APIReturnType
 		}
 	}
 }

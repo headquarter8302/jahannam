@@ -150,8 +150,33 @@
 					parameters: { 'userId': userId.toString() }
 				});
 			}
-		}
+		},
+		/**
+		 * DWDimensionApi
+		 * @namespace
+		 */
+		DWDimensionApi: {
+			/**
+			 * Returns wiki metadata
+			 * @method getWikis
+			 * @param {number} limit return results for at most this number of wikis (int, default 100)
+			 * @param {number} [after_wiki_id] return results for wikis with a greater id (optional, int)
+			 */
+			getWikis: function (limit = 100, after_wiki_id) {
+				/** @type {Record<string, string>} */
+				const params = {
+					'limit': limit.toString(),
+				};
 
+				if (after_wiki_id) params['after_wiki_id'] = after_wiki_id.toString();
+
+				return window.dev.jahannam.util.get({
+					controller: 'DWDimensionApi',
+					method: 'getWikis',
+					parameters: params
+				});
+			}
+		}
 	});
 
 	debug("Initialization done!");
