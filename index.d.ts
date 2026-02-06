@@ -41,6 +41,49 @@ declare namespace Jahannam {
 		interface GetUserDataParameters {
 			userId: string
 		}
+		type GetUserDataReturnType = {
+			isReadOnly: boolean
+			userData: {
+				avatar: `https://static.wikia.nocookie.net/${string}`
+				bio: string
+				canEditProfile: boolean
+				canRemoveAvatar: boolean
+				contributionsUrl: string
+				discordHandle: string
+				discussionUserUrl: `/f/u/${string}`
+				/** String representation. Refer to the `localEdits` prop for the integer value */
+				edits: string
+				/**
+				 * TODO: template type this
+				 */
+				fbPage: string
+				hideEditsWikis: any | null
+				id: number
+				isBlocked: boolean
+				isMessageWallBlocked: boolean
+				isUserPageOwner: boolean
+				localEdits: number
+				/** templated? */
+				messageWallNewMessageUrl: string
+				/** templated? */
+				messageWallUrl: string
+				name: string
+				posts: number
+				registration: string
+				showZeroStates: number
+				tags: string[]
+				/**
+				 * TODO: template type this
+				 */
+				twitter: string
+				/** templated? */
+				userBlogUrl: string
+				/** templated? */
+				userProfileActivityUrl: string
+				username: string
+				website: string
+			}
+		}
 	}
 
 	namespace DWDimensionApi {
