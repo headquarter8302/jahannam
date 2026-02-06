@@ -45,7 +45,8 @@ declare namespace Jahannam {
 
 	interface Runtime {
 		cfg: {
-			wikiId: string
+			cityId: string
+			subdomain: string
 			endpoints: {
 				wikia: URL
 				service: URL

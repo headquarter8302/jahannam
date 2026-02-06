@@ -30,9 +30,6 @@
 	// @ts-ignore
 	window.dev.jahannam.cfg = window.dev.jahannam.cfg || {};
 
-	// mw.loader.using('mediawiki.api').then(function () {
-
-	// });
 	debug("Initializing...");
 
 	Object.assign(window.dev.jahannam, {
@@ -41,10 +38,11 @@
 		 * @namespace
 		 */
 		cfg: {
-			wikiId: mw.config.get('wgWikiID'),
+			cityId: mw.config.get('wgCityId'),
+			subdomain: mw.config.get('wgWikiID'),
 			endpoints: Object.assign({
 				wikia: new URL('https://'
-					.concat(window.dev.jahannam.cfg.wikiId)
+					.concat(window.dev.jahannam.cfg.subdomain)
 					.concat('.fandom.com/wikia.php')),
 				service: new URL('https://services.fandom.com'),
 			}, window.dev.jahannam.cfg.endpoints || {}),
