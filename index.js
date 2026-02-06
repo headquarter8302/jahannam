@@ -86,9 +86,7 @@
 
 				return fetch(fullURL)
 					.then(function (response) {
-						if (!response.ok) {
-							return error("Request error:", response.statusText, response.status);
-						};
+						if (!response.ok) return error("Request error:", response.statusText, response.status);
 						return response.json();
 					})
 					.catch(reason => {
