@@ -16,10 +16,11 @@
 
 	/**
 	 * @param {any} msg
+	 * @param {any} [data]
 	 * @returns {false}
 	 */
-	function error(msg) {
-		console.error(`[Jahannam] ${msg}`);
+	function error(msg, ...data) {
+		console.error(`[Jahannam] ${msg}`, ...data);
 		return false;
 	}
 
@@ -39,12 +40,11 @@
 		 */
 		cfg: {
 			cityId: mw.config.get('wgCityId'),
-			subdomain: mw.config.get('wgWikiID'),
 			endpoints: Object.assign({
 				wikia: new URL('https://'
-					.concat(window.dev.jahannam.cfg.subdomain)
+					.concat(mw.config.get('wgWikiID'))
 					.concat('.fandom.com/wikia.php')),
-				service: new URL('https://services.fandom.com'),
+				service: new URL(mw.config.get('wgServicesExternalDomain')),
 			}, window.dev.jahannam.cfg.endpoints || {}),
 			username:
 				typeof window.dev.jahannam.cfg.username !== 'undefined'
@@ -70,7 +70,7 @@
 					!opts
 					|| !opts.controller
 					|| !opts.method
-				) return error("[Jahannam] Invalid parameter on 'get()'");
+				) return error("Invalid parameter on 'get()'");
 
 				const url = opts.url || window.dev.jahannam.cfg.endpoints.wikia;
 				const controller = opts.controller;
@@ -88,12 +88,12 @@
 				return fetch(fullURL)
 					.then(function (response) {
 						if (!response.ok) {
-							return error(`Request error: ${response.status} ${response.statusText}`);
+							return error("Request error:", response.statusText, response.status);
 						};
 						return response.json();
 					})
 					.catch(reason => {
-						return error('[Jahannam] Request error: ' + reason);
+						return error("Request error", reason.message);
 					});
 			},
 			/**
