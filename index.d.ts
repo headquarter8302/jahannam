@@ -118,7 +118,7 @@ export declare namespace Jahannam {
 		}
 
 		UserProfile: {
-			getUserData(userId: number): APIReturnType
+			getUserData(userId: number): Jahannam.UserProfile.GetUserDataReturnType
 		}
 
 		DWDimensionApi: {
