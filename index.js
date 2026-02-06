@@ -84,7 +84,17 @@
 					parameters
 				});
 
-				return fetch(fullURL)
+				/** @type {RequestInit} */
+				const fetchParams = {
+					cache: 'no-cache',
+					method: 'GET',
+					mode: 'same-origin',
+				};
+
+				// cors
+				if (url.toString() !== window.dev.jahannam.cfg.endpoints.wikia.toString()) fetchParams.mode = 'cors'
+
+				return fetch(fullURL, fetchParams)
 					.then(function (response) {
 						if (!response.ok) return error("Request error:", response.statusText, response.status);
 						return response.json();
