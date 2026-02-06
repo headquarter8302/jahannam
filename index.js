@@ -55,7 +55,6 @@
 		util: {
 			/**
 			 * GETs a given URL
-			 *
 			 * @async
 			 * @param {Object} opts
 			 * @param {URL} [opts.url=window.dev.jahannam.cfg.endpoints.wikia]
@@ -98,7 +97,6 @@
 			},
 			/**
 			 * Creates a URL with the given kv pair of URL parameters
-			 *
 			 * @param {URL} baseURL
 			 * @param {Record<string, string | Record<string, string>>} [paramPair={}]
 			 * @returns {URL}
@@ -118,7 +116,6 @@
 		},
 		/**
 		 * Fandom\FeedsAndPosts\Discussion\DiscussionPost
-		 *
 		 * @namespace
 		 */
 		DiscussionPost: {
@@ -138,13 +135,11 @@
 		},
 		/**
 		 * UserProfile
-		 *
 		 * @namespace
 		 */
 		UserProfile: {
 			/**
 			 * A user's special pages on the wiki, their avatar, their edit and post count, whether they are blocked
-			 *
 			 * @method getUserData
 			 * @param {number} userId
 			 */
@@ -156,6 +151,7 @@
 				});
 			}
 		}
+
 	});
 
 	debug("Initialization done!");
