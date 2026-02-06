@@ -142,6 +142,7 @@
 			 * A user's special pages on the wiki, their avatar, their edit and post count, whether they are blocked
 			 * @method getUserData
 			 * @param {number} userId
+			 * @returns {import('./index.d.ts').Jahannam.UserProfile.GetUserDataReturnType}
 			 */
 			getUserData: function (userId) {
 				return window.dev.jahannam.util.get({

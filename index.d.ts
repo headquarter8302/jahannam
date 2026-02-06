@@ -17,7 +17,7 @@ declare global {
 	}
 }
 
-declare namespace Jahannam {
+export declare namespace Jahannam {
 	type APIReturnType<T = any> = Promise<false | T>
 
 	namespace Util {
@@ -41,7 +41,7 @@ declare namespace Jahannam {
 		interface GetUserDataParameters {
 			userId: string
 		}
-		type GetUserDataReturnType = {
+		type GetUserDataReturnType = APIReturnType<{
 			isReadOnly: boolean
 			userData: {
 				avatar: `https://static.wikia.nocookie.net/${string}`
@@ -83,7 +83,7 @@ declare namespace Jahannam {
 				username: string
 				website: string
 			}
-		}
+		}>
 	}
 
 	namespace DWDimensionApi {
