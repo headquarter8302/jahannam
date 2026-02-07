@@ -14,6 +14,9 @@ declare global {
 		config: {
 			get(key: string): any
 		}
+		hook: (hook: string) => {
+			fire: (payload: any) => void
+		}
 	}
 
 	type Version = `v${number}`

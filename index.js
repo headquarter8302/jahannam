@@ -218,6 +218,6 @@
 		}
 	}
 
-	window.dev.jahannam.class = Jahannam;
+	mw.hook('dev.jahannam').fire(window.dev.jahannam.class = Jahannam);
 	return;
 })(window, mediaWiki);
