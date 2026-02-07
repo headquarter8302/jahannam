@@ -15,12 +15,56 @@ declare global {
 			get(key: string): any
 		}
 	}
+
+	type Version = `v${number}`
+}
+
+export declare class Jahannam {
+	constructor(cfg?: Partial<Jahannam.Config>)
+
+	readonly cfg: Jahannam.Config
+
+	util: {
+		get(opts: Jahannam.Util.GetOptions): Jahannam.APIReturnType
+		createURL(
+			baseURL: URL,
+			paramPair?: Record<string, string | Record<string, string>>
+		): URL
+	}
+
+	DiscussionPost: {
+		getPost(postId: number): Jahannam.APIReturnType
+	}
+
+	UserProfile: {
+		getUserData(userId: number): Jahannam.UserProfile.GetUserDataReturnType
+	}
+
+	DWDimensionApi: {
+		getWikis(
+			limit?: number,
+			after_wiki_id?: number
+		): Jahannam.DWDimensionApi.GetWikisReturnType
+		getUsers(
+			limit?: number,
+			after_user_id?: number
+		): Jahannam.DWDimensionApi.GetUsersReturnType
+	}
 }
 
 export declare namespace Jahannam {
 	type APIReturnType<T = any> = Promise<false | T>
 	/** what the heck */
 	type APIBoolString = '0' | '1'
+
+	interface Config {
+		cityId: number
+		endpoints: {
+			wikia: URL
+			service: URL
+		}
+		version: Version
+	}
 
 	namespace Util {
 		interface GetOptions {
@@ -139,7 +183,7 @@ export declare namespace Jahannam {
 		}>
 	}
 
-	interface Runtime {
+	interface Runtime extends Jahannam {
 		cfg: {
 			cityId: string
 			subdomain: string
@@ -147,29 +191,8 @@ export declare namespace Jahannam {
 				wikia: URL
 				service: URL
 			}
-			/** `null` for anonymous users */
-			username: string | null
 		}
-
-		util: {
-			get(opts: Util.GetOptions): APIReturnType
-			createURL(
-				baseURL: URL,
-				paramPair?: Record<string, string | Record<string, string>>
-			): URL
-		}
-
-		DiscussionPost: {
-			getPost(postId: number): APIReturnType
-		}
-
-		UserProfile: {
-			getUserData(userId: number): Jahannam.UserProfile.GetUserDataReturnType
-		}
-
-		DWDimensionApi: {
-			getWikis(limit: number, after_wiki_id?: number): APIReturnType
-			getUsers(limit: number, after_wiki_id?: number): APIReturnType
-		}
+		class: typeof Jahannam
+		version: Version
 	}
 }

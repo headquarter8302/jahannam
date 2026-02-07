@@ -2,12 +2,15 @@
  * @name	Jahannam
  * @author	Headquarter8302
  * @description	Library for interacting with the Nirvana backend, a.k.a `wikia.php`
- * @license	MIT - CC-BY-SA 3.0 Caburum for the Nirvana docs (https://caburum.fandom.com/wiki/Nirvana)
+ * @license	MIT
+ * @license	CC-BY-SA-3.0 Caburum for the Nirvana docs (https://caburum.fandom.com/wiki/Nirvana)
+ * @version	v0
  * <nowiki>
  */
 
-; (function (window, mw) {
-	console.log("[Jahannam] v0");
+; ((window, mw) => {
+	/** @type {Version} */
+	const version = "v0";
 
 	/** @param {any} msg */
 	function debug(msg) {
@@ -18,195 +21,203 @@
 	 * @param {any} msg
 	 * @param {any} [data]
 	 * @returns {false}
-	 */
+	*/
 	function error(msg, ...data) {
 		console.error(`[Jahannam] ${msg}`, ...data);
 		return false;
 	}
 
-	// @ts-ignore
-	window.dev = window.dev || {};
-	// @ts-ignore
-	window.dev.jahannam = window.dev.jahannam || {};
-	// @ts-ignore
+	// @ts-expect-error
+	(window.dev = window.dev || {}).jahannam = {};
+	// @ts-expect-error
 	window.dev.jahannam.cfg = window.dev.jahannam.cfg || {};
 
-	debug("Initializing...");
+	debug(version);
 
-	Object.assign(window.dev.jahannam, {
+	class Jahannam {
 		/**
-		 * Holds the configuration for the script. Will be overwritten by an existing object
-		 * @namespace
-		 */
-		cfg: {
-			cityId: mw.config.get('wgCityId'),
-			endpoints: Object.assign({
-				wikia: new URL('https://'
-					.concat(mw.config.get('wgWikiID'))
-					.concat('.fandom.com/wikia.php')),
-				service: new URL(mw.config.get('wgServicesExternalDomain')),
-			}, window.dev.jahannam.cfg.endpoints || {}),
-			username:
-				typeof window.dev.jahannam.cfg.username !== 'undefined'
-					? window.dev.jahannam.cfg.username
-					: mw.config.get('wgUserName')
-		},
-		/** @namespace */
-		util: {
+		 * @param {import('./index.d.ts').Jahannam.Config} cfgInput
+		*/
+		constructor (cfgInput) {
 			/**
-			 * GETs a given URL
-			 * @async
-			 * @param {Object} opts
-			 * @param {URL} [opts.url=window.dev.jahannam.cfg.endpoints.wikia]
-			 * @param {string} opts.controller
-			 * @param {string} opts.method
-			 * @param {string} [opts.format='json']
-			 * @param {Record<string, string>} opts.parameters
-			 * @returns {Promise<false | any> | false}
+			 * Holds the configuration for the script. Will be overwritten by the class config input
+			 * @type {import('./index.d.ts').Jahannam['cfg']}
+			 * @namespace
 			 */
-			get: function (opts) {
-				if (
-					!opts
-					|| !opts.controller
-					|| !opts.method
-				) return error("Invalid parameter on 'get()'");
+			this.cfg = {
+				cityId: mw.config.get('wgCityId'),
+				endpoints: {
+					wikia: new URL('https://'
+						.concat(mw.config.get('wgWikiID'))
+						.concat('.fandom.com/wikia.php')),
+					service: new URL(mw.config.get('wgServicesExternalDomain')),
+				},
+				version: version
+			};
 
-				const url = opts.url || window.dev.jahannam.cfg.endpoints.wikia;
-				const controller = opts.controller;
-				const method = opts.method;
-				const format = opts.format || 'json';
-				const parameters = opts.parameters;
-
-				const fullURL = this.createURL(url, {
-					controller,
-					method,
-					format,
-					parameters
-				});
-
-				/** @type {RequestInit} */
-				const fetchParams = {
-					cache: 'no-cache',
-					method: 'GET',
-					mode: 'same-origin',
-				};
-
-				// cors
-				if (url.toString() !== window.dev.jahannam.cfg.endpoints.wikia.toString()) fetchParams.mode = 'cors'
-
-				return fetch(fullURL, fetchParams)
-					.then(function (response) {
-						if (!response.ok) return error("Request error:", response.statusText, response.status);
-						return response.json();
-					})
-					.catch(reason => {
-						return error("Request error", reason.message);
-					});
-			},
-			/**
-			 * Creates a URL with the given kv pair of URL parameters
-			 * @param {URL} baseURL
-			 * @param {Record<string, string | Record<string, string>>} [paramPair={}]
-			 * @returns {URL}
-			 */
-			createURL(baseURL, paramPair = {}) {
-				const url = new URL(baseURL);
-				for (const [k, v] of Object.entries(paramPair)) {
-					if (v && typeof v === "object") {
-						for (const [param, paramV] of Object.entries(v))
-							url.searchParams.append(param, paramV);
-						continue;
-					}
-					if (typeof v === "string") url.searchParams.append(k, v);
+			// what's optional chaining?
+			if (cfgInput) {
+				if (cfgInput.cityId) this.cfg.cityId = cfgInput.cityId;
+				if (cfgInput.endpoints) {
+					if (cfgInput.endpoints.wikia) this.cfg.endpoints.wikia = cfgInput.endpoints.wikia;
+					if (cfgInput.endpoints.service) this.cfg.endpoints.service = cfgInput.endpoints.service;
 				}
-				return url;
 			}
-		},
-		/**
-		 * Fandom\FeedsAndPosts\Discussion\DiscussionPost
-		 * @namespace
-		 */
-		DiscussionPost: {
-			/**
-			 * Gets information of a specific post by its ID
-			 *
-			 * @method getPost
-			 * @param {number} postId
-			 */
-			getPost: function (postId) {
-				return window.dev.jahannam.util.get({
-					controller: 'DiscussionPost',
-					method: 'getPost',
-					parameters: { 'postId': postId.toString() }
-				});
-			},
-		},
-		/**
-		 * UserProfile
-		 * @namespace
-		 */
-		UserProfile: {
-			/**
-			 * A user's special pages on the wiki, their avatar, their edit and post count, whether they are blocked
-			 * @method getUserData
-			 * @param {number} userId
-			 * @returns {import('./index.d.ts').Jahannam.UserProfile.GetUserDataReturnType}
-			 */
-			getUserData: function (userId) {
-				return window.dev.jahannam.util.get({
-					controller: 'UserProfile',
-					method: 'getUserData',
-					parameters: { 'userId': userId.toString() }
-				});
-			}
-		},
-		/**
-		 * DWDimensionApi
-		 * @namespace
-		 */
-		DWDimensionApi: {
-			/**
-			 * Returns wiki metadata
-			 * @method getWikis
-			 * @param {number} [limit=100] return results for at most this number of wikis (int, default 100)
-			 * @param {number} [after_wiki_id] return results for wikis with a greater id (optional, int)
-			 * @returns {import('./index.d.ts').Jahannam.DWDimensionApi.GetWikisReturnType}
-			 */
-			getWikis: function (limit = 100, after_wiki_id) {
-				/** @type {Record<string, string>} */
-				const params = {
-					'limit': limit.toString(),
-				};
-				if (after_wiki_id) params['after_wiki_id'] = after_wiki_id.toString();
-				return window.dev.jahannam.util.get({
-					controller: 'DWDimensionApi',
-					method: 'getWikis',
-					parameters: params
-				});
-			},
-			/**
-			 * Returns user data
-			 * @method getUsers
-			 * @param {number} [limit=100] return results for at most this many results (int, default 100)
-			 * @param {number} [after_user_id] return results after this id (optional, int)
-			 * @returns {import('./index.d.ts').Jahannam.DWDimensionApi.GetUsersReturnType}
-			 */
-			getUsers: function (limit = 100, after_user_id) {
-				/** @type {Record<string, string>} */
-				const params = {
-					'limit': limit.toString(),
-				};
-				if (after_user_id) params['after_user_id'] = after_user_id.toString();
-				return window.dev.jahannam.util.get({
-					controller: 'DWDimensionApi',
-					method: 'getUsers',
-					parameters: params
-				});
-			},
-		}
-	});
 
-	debug("Initialization done!");
-	console.debug(window.dev.jahannam);
+			// readonly
+			Object.freeze(this.cfg);
+			Object.freeze(this.cfg.endpoints);
+
+			/**
+			 * @type {import('./index.d.ts').Jahannam['util']}
+			 * @namespace
+			 */
+			this.util = {
+				/**
+				 * GETs a given URL. Note that as of February 2026, Fandom still has not allowed interwiki cross-origin requests, you will get a CORS error
+				 * @async
+				 * @method get
+				 */
+				get: (opts) => {
+					if (
+						!opts
+						|| !opts.controller
+						|| !opts.method
+					) return Promise.resolve(error("Invalid parameter on 'get()'"));
+
+					const url = opts.url || this.cfg.endpoints.wikia;
+					const controller = opts.controller;
+					const method = opts.method;
+					const format = opts.format || 'json';
+					const parameters = opts.parameters || {};
+
+					const fullURL = this.util.createURL(url, {
+						controller,
+						method,
+						format,
+						parameters
+					});
+
+					const isCors = url.origin !== window.location.origin;
+
+					/** @type {RequestInit} */
+					const fetchParams = {
+						cache: 'no-cache',
+						method: 'GET',
+						mode: isCors ? 'cors' : 'same-origin'
+					};
+
+					return fetch(fullURL, fetchParams)
+						.then(response => {
+							if (!response.ok) return error("Request error:", response.statusText, response.status);
+							return response.json();
+						})
+						.catch(reason => {
+							return error("Request error", reason.message);
+						});
+				},
+
+				/**
+				 * Creates a URL with the given kv pair of URL parameters
+				 * @method createURL
+				 */
+				createURL(baseURL, paramPair = {}) {
+					const url = new URL(baseURL);
+					for (const [k, v] of Object.entries(paramPair)) {
+						if (v && typeof v === "object") {
+							for (const [param, paramV] of Object.entries(v))
+								url.searchParams.append(param, paramV);
+							continue;
+						}
+						if (typeof v === "string") url.searchParams.append(k, v);
+					}
+					return url;
+				}
+			};
+
+			/**
+			 * UserProfile
+			 * @type {import('./index.d.ts').Jahannam['UserProfile']}
+			 * @namespace
+			 */
+			this.UserProfile = {
+				/**
+				 * A user's special pages on the wiki, their avatar, their edit and post count, whether they are blocked
+				 * @method getUserData
+				 */
+				getUserData: (userId) => {
+					return this.util.get({
+						controller: 'UserProfile',
+						method: 'getUserData',
+						parameters: { 'userId': userId.toString() }
+					});
+				}
+			};
+
+			/**
+			 * Fandom\FeedsAndPosts\Discussion\DiscussionPost
+			 * @type {import('./index.d.ts').Jahannam['DiscussionPost']}
+			 * @namespace
+			 */
+			this.DiscussionPost = {
+				/**
+				 * Gets information of a specific post by its ID
+				 * @method getPost
+				 */
+				getPost: (postId) => {
+					return this.util.get({
+						controller: 'DiscussionPost',
+						method: 'getPost',
+						parameters: { 'postId': postId.toString() }
+					});
+				},
+			};
+
+			/**
+			 * DWDimensionApi
+			 * @type {import('./index.d.ts').Jahannam['DWDimensionApi']}
+			 * @namespace
+			 */
+			this.DWDimensionApi = {
+				/**
+				 * Returns wiki metadata
+				 * @method getWikis
+				 */
+				getWikis: (limit = 100, after_wiki_id) => {
+					/** @type {Record<string, string>} */
+					const params = {
+						'limit': limit.toString(),
+					};
+					if (after_wiki_id) params['after_wiki_id'] = after_wiki_id.toString();
+					return this.util.get({
+						controller: 'DWDimensionApi',
+						method: 'getWikis',
+						parameters: params
+					});
+				},
+
+				/**
+				 * Returns user data
+				 * @method getUsers
+				 */
+				getUsers: (limit = 100, after_user_id) => {
+					/** @type {Record<string, string>} */
+					const params = {
+						'limit': limit.toString(),
+					};
+					if (after_user_id) params['after_user_id'] = after_user_id.toString();
+					return this.util.get({
+						controller: 'DWDimensionApi',
+						method: 'getUsers',
+						parameters: params
+					});
+				},
+			};
+
+			debug("Instanced");
+		}
+	}
+
+	window.dev.jahannam.class = Jahannam;
 	return;
 })(window, mediaWiki);
