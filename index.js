@@ -136,44 +136,6 @@
 			};
 
 			/**
-			 * UserProfile
-			 * @type {import('./index.d.ts').Jahannam['UserProfile']}
-			 * @namespace
-			 */
-			this.UserProfile = {
-				/**
-				 * A user's special pages on the wiki, their avatar, their edit and post count, whether they are blocked
-				 * @method getUserData
-				 */
-				getUserData: (userId) => {
-					return this.util.get({
-						controller: 'UserProfile',
-						method: 'getUserData',
-						parameters: { 'userId': userId.toString() }
-					});
-				}
-			};
-
-			/**
-			 * Fandom\FeedsAndPosts\Discussion\DiscussionPost
-			 * @type {import('./index.d.ts').Jahannam['DiscussionPost']}
-			 * @namespace
-			 */
-			this.DiscussionPost = {
-				/**
-				 * Gets information of a specific post by its ID
-				 * @method getPost
-				 */
-				getPost: (postId) => {
-					return this.util.get({
-						controller: 'DiscussionPost',
-						method: 'getPost',
-						parameters: { 'postId': postId.toString() }
-					});
-				},
-			};
-
-			/**
 			 * DWDimensionApi
 			 * @type {import('./index.d.ts').Jahannam['DWDimensionApi']}
 			 * @namespace
@@ -210,6 +172,44 @@
 						controller: 'DWDimensionApi',
 						method: 'getUsers',
 						parameters: params
+					});
+				},
+			};
+
+			/**
+			 * UserProfile
+			 * @type {import('./index.d.ts').Jahannam['UserProfile']}
+			 * @namespace
+			 */
+			this.UserProfile = {
+				/**
+				 * A user's special pages on the wiki, their avatar, their edit and post count, whether they are blocked
+				 * @method getUserData
+				 */
+				getUserData: (userId) => {
+					return this.util.get({
+						controller: 'UserProfile',
+						method: 'getUserData',
+						parameters: { 'userId': userId.toString() }
+					});
+				}
+			};
+
+			/**
+			 * Fandom\FeedsAndPosts\Discussion\DiscussionPost
+			 * @type {import('./index.d.ts').Jahannam['DiscussionPost']}
+			 * @namespace
+			 */
+			this.DiscussionPost = {
+				/**
+				 * Gets information of a specific post by its ID
+				 * @method getPost
+				 */
+				getPost: (postId) => {
+					return this.util.get({
+						controller: 'DiscussionPost',
+						method: 'getPost',
+						parameters: { 'postId': postId.toString() }
 					});
 				},
 			};
