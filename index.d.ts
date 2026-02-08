@@ -35,23 +35,27 @@ export declare class Jahannam {
 		): URL
 	}
 
+	DWDimensionApi: {
+		getWikis(
+			limit?: number,
+			after_wiki_id?: number
+		): Jahannam.DWDimensionApi.GetWikisReturnType
+		getAllArticles(
+			limit?: number,
+			starting_wiki_id?: number
+		): Jahannam.DWDimensionApi.GetAllArticlesReturnType
+		getUsers(
+			limit?: number,
+			after_user_id?: number
+		): Jahannam.DWDimensionApi.GetUsersReturnType
+	}
+
 	DiscussionPost: {
 		getPost(postId: number): Jahannam.APIReturnType
 	}
 
 	UserProfile: {
 		getUserData(userId: number): Jahannam.UserProfile.GetUserDataReturnType
-	}
-
-	DWDimensionApi: {
-		getWikis(
-			limit?: number,
-			after_wiki_id?: number
-		): Jahannam.DWDimensionApi.GetWikisReturnType
-		getUsers(
-			limit?: number,
-			after_user_id?: number
-		): Jahannam.DWDimensionApi.GetUsersReturnType
 	}
 }
 
@@ -171,6 +175,15 @@ export declare namespace Jahannam {
 			vertical_name: string
 			wiki_id: string
 			wiki_manager: string
+		}[]>
+
+		type GetAllArticlesReturnType = APIReturnType<{
+			article_id: string
+			created_at: string
+			is_redirect: APIBoolString
+			namespace_id: string
+			title: string
+			wiki_id: string
 		}[]>
 
 		type GetUsersReturnType = APIReturnType<{

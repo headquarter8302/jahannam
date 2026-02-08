@@ -159,6 +159,23 @@
 				},
 
 				/**
+				 * Returns basic article metadata
+				 * @method getAllArticles
+				 */
+				getAllArticles: (limit = 100, starting_wiki_id) => {
+					/** @type {Record<string, string>} */
+					const params = {
+						'limit': limit.toString(),
+					};
+					if (starting_wiki_id) params['starting_wiki_id'] = starting_wiki_id.toString();
+					return this.util.get({
+						controller: 'DWDimensionApi',
+						method: 'getAllArticles',
+						parameters: params
+					});
+				},
+
+				/**
 				 * Returns user data
 				 * @method getUsers
 				 */
