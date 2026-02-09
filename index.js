@@ -78,18 +78,17 @@
 				 * @async
 				 * @method get
 				 */
-				get: (opts) => {
+				get: ({
+					url = this.cfg.endpoints.wikia,
+					controller,
+					method,
+					format = 'json',
+					parameters = {}
+				}) => {
 					if (
-						!opts
-						|| !opts.controller
-						|| !opts.method
+						!controller
+						|| !method
 					) return Promise.resolve(error("Invalid parameter on 'get()'"));
-
-					const url = opts.url || this.cfg.endpoints.wikia;
-					const controller = opts.controller;
-					const method = opts.method;
-					const format = opts.format || 'json';
-					const parameters = opts.parameters || {};
 
 					const fullURL = this.util.createURL(url, {
 						controller,
@@ -145,7 +144,10 @@
 				 * Returns wiki metadata
 				 * @method getWikis
 				 */
-				getWikis: (limit = 100, after_wiki_id) => {
+				getWikis: ({
+					limit = 100,
+					after_wiki_id
+				}) => {
 					/** @type {Record<string, string>} */
 					const params = {
 						'limit': limit.toString(),
@@ -162,7 +164,10 @@
 				 * Returns basic article metadata
 				 * @method getAllArticles
 				 */
-				getAllArticles: (limit = 100, starting_wiki_id) => {
+				getAllArticles: ({
+					limit = 100,
+					starting_wiki_id
+				}) => {
 					/** @type {Record<string, string>} */
 					const params = {
 						'limit': limit.toString(),
@@ -179,7 +184,10 @@
 				 * Returns user data
 				 * @method getUsers
 				 */
-				getUsers: (limit = 100, after_user_id) => {
+				getUsers: ({
+					limit = 100,
+					after_user_id
+				}) => {
 					/** @type {Record<string, string>} */
 					const params = {
 						'limit': limit.toString(),
@@ -203,7 +211,9 @@
 				 * A user's special pages on the wiki, their avatar, their edit and post count, whether they are blocked
 				 * @method getUserData
 				 */
-				getUserData: (userId) => {
+				getUserData: ({
+					userId
+				}) => {
 					return this.util.get({
 						controller: 'UserProfile',
 						method: 'getUserData',
@@ -222,7 +232,9 @@
 				 * Gets information of a specific post by its ID
 				 * @method getPost
 				 */
-				getPost: (postId) => {
+				getPost: ({
+					postId
+				}) => {
 					return this.util.get({
 						controller: 'DiscussionPost',
 						method: 'getPost',

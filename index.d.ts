@@ -36,26 +36,17 @@ export declare class Jahannam {
 	}
 
 	DWDimensionApi: {
-		getWikis(
-			limit?: number,
-			after_wiki_id?: number
-		): Jahannam.DWDimensionApi.GetWikisReturnType
-		getAllArticles(
-			limit?: number,
-			starting_wiki_id?: number
-		): Jahannam.DWDimensionApi.GetAllArticlesReturnType
-		getUsers(
-			limit?: number,
-			after_user_id?: number
-		): Jahannam.DWDimensionApi.GetUsersReturnType
+		getWikis(opts: Jahannam.DWDimensionApi.GetWikisParameters): Jahannam.DWDimensionApi.GetWikisReturnType
+		getAllArticles(opts: Jahannam.DWDimensionApi.GetAllArticlesParameters): Jahannam.DWDimensionApi.GetAllArticlesReturnType
+		getUsers(opts: Jahannam.DWDimensionApi.GetUsersParameters): Jahannam.DWDimensionApi.GetUsersReturnType
 	}
 
 	DiscussionPost: {
-		getPost(postId: number): Jahannam.APIReturnType
+		getPost(opts: Jahannam.DiscussionPost.GetPostParameters): Jahannam.APIReturnType
 	}
 
 	UserProfile: {
-		getUserData(userId: number): Jahannam.UserProfile.GetUserDataReturnType
+		getUserData(opts: Jahannam.UserProfile.GetUserDataParameters): Jahannam.UserProfile.GetUserDataReturnType
 	}
 }
 
@@ -92,8 +83,9 @@ export declare namespace Jahannam {
 
 	namespace UserProfile {
 		interface GetUserDataParameters {
-			userId: string
+			userId: number
 		}
+
 		type GetUserDataReturnType = APIReturnType<{
 			isReadOnly: boolean
 			userData: {
@@ -141,13 +133,18 @@ export declare namespace Jahannam {
 
 	namespace DWDimensionApi {
 		interface GetWikisParameters {
-			limit: number
+			limit?: number
 			after_wiki_id?: number
 		}
 
+		interface GetAllArticlesParameters {
+			limit?: number
+			starting_wiki_id?: number
+		}
+
 		interface GetUsersParameters {
-			limit: number
-			after_wiki_id?: number
+			limit?: number
+			after_user_id?: number
 		}
 
 		type GetWikisReturnType = APIReturnType<{
