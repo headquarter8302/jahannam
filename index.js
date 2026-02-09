@@ -241,6 +241,20 @@
 						parameters: { 'postId': postId.toString() }
 					});
 				},
+
+				/**
+				 * Gets post history
+				 * @method getPostHistory
+				 */
+				getPostHistory: ({
+					postId
+				}) => {
+					return this.util.get({
+						controller: 'DiscussionPost',
+						method: 'getPostHistory',
+						parameters: { 'postId': postId.toString() }
+					});
+				},
 			};
 
 			debug("Instanced");

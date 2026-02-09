@@ -42,7 +42,9 @@ export declare class Jahannam {
 	}
 
 	DiscussionPost: {
-		getPost(opts: Jahannam.DiscussionPost.GetPostParameters): Jahannam.APIReturnType
+		// TODO: inspect return type
+		getPost(opts: Jahannam.DiscussionPost.GetPostParameters): Jahannam.DiscussionPost.GetPostReturnType
+		getPostHistory(opts: Jahannam.DiscussionPost.GetPostHistoryParameters): Jahannam.DiscussionPost.GetPostHistoryReturnType
 	}
 
 	UserProfile: {
@@ -77,7 +79,21 @@ export declare namespace Jahannam {
 
 	namespace DiscussionPost {
 		interface GetPostParameters {
-			postId: string
+			postId: number
+		}
+
+		// TODO: fill this
+		interface GetPostReturnType {
+
+		}
+
+		interface GetPostHistoryParameters {
+			postId: number
+		}
+
+		// TODO: fill this
+		interface GetPostHistoryReturnType {
+
 		}
 	}
 
