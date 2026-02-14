@@ -50,6 +50,7 @@ export declare class Jahannam {
 	CommunityPage: {
 		getAllAdminsData(opts: Jahannam.CommunityPage.GetAllAdminsDataParameters): Jahannam.CommunityPage.GetAllAdminsDataReturnType
 		getAllMembersData(opts: Jahannam.CommunityPage.GetAllMembersDataParameters): Jahannam.CommunityPage.GetAllMembersDataReturnType
+		getTopContributorsData(opts: Jahannam.CommunityPage.GetTopContributorsDataParameters): Jahannam.CommunityPage.GetTopContributorsDataReturnType
 	}
 
 	UserProfile: {
@@ -197,6 +198,18 @@ export declare namespace Jahannam {
 			moreMembersLink: string
 			moreMembersText: string
 			noMembersText: string
+		}>
+
+		interface GetTopContributorsDataParameters {
+			uselang: string
+		}
+
+		type GetTopContributorsDataReturnType = APIReturnType<{
+			admin: string
+			anonText: string
+			contributors: APIMemberObject[]
+			currentUser: APIMemberObject
+			noContribsText: string
 		}>
 	}
 

@@ -246,6 +246,13 @@
 						parameters: { 'uselang': uselang }
 					});
 				},
+				getTopContributorsData: ({ uselang }) => {
+					return this.util.get({
+						controller: 'CommunityPage',
+						method: 'getTopContributorsData',
+						parameters: { 'uselang': uselang }
+					});
+				}
 			};
 
 			/**
