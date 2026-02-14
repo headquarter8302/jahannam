@@ -223,6 +223,25 @@
 			};
 
 			/**
+			 * Fandom\CommunityPage\CommunityPage
+			 * @type {import('./index.d.ts').Jahannam['CommunityPage']}
+			 * @namespace
+			 */
+			this.CommunityPage = {
+				/**
+				 * 	Gets a list of the wiki admins
+				 * @method getAllAdminsData
+				 */
+				getAllAdminsData: ({ uselang }) => {
+					return this.util.get({
+						controller: 'CommunityPage',
+						method: 'getAllAdminsData',
+						parameters: { 'uselang': uselang }
+					});
+				},
+			};
+
+			/**
 			 * Fandom\FeedsAndPosts\Discussion\DiscussionPost
 			 * @type {import('./index.d.ts').Jahannam['DiscussionPost']}
 			 * @namespace
