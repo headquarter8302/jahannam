@@ -47,6 +47,11 @@ export declare class Jahannam {
 		getPostHistory(opts: Jahannam.DiscussionPost.GetPostHistoryParameters): Jahannam.DiscussionPost.GetPostHistoryReturnType
 	}
 
+	CommunityPage: {
+		getAllAdminsData(opts: Jahannam.CommunityPage.GetAllAdminsDataParameters): Jahannam.CommunityPage.GetAllAdminsDataReturnType
+		getAllMembersData(opts: Jahannam.CommunityPage.GetAllMembersDataParameters): Jahannam.CommunityPage.GetAllMembersDataReturnType
+	}
+
 	UserProfile: {
 		getUserData(opts: Jahannam.UserProfile.GetUserDataParameters): Jahannam.UserProfile.GetUserDataReturnType
 	}
@@ -177,6 +182,22 @@ export declare namespace Jahannam {
 			topAdminsHeaderText: string
 		}>
 
+		interface GetAllMembersDataParameters {
+			uselang: string
+		}
+
+		type GetAllMembersDataReturnType = APIReturnType<{
+			admin: string
+			allContributorsLegend: string
+			allMembersHeaderText: string
+			haveMoreMembers: string
+			joinedText: string
+			members: APIMemberObject[]
+			membersCount: string
+			moreMembersLink: string
+			moreMembersText: string
+			noMembersText: string
+		}>
 	}
 
 	namespace DWDimensionApi {

@@ -239,6 +239,13 @@
 						parameters: { 'uselang': uselang }
 					});
 				},
+				getAllMembersData: ({ uselang }) => {
+					return this.util.get({
+						controller: 'CommunityPage',
+						method: 'getAllMembersData',
+						parameters: { 'uselang': uselang }
+					});
+				},
 			};
 
 			/**
