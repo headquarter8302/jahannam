@@ -47,6 +47,12 @@ export declare class Jahannam {
 		getPostHistory(opts: Jahannam.DiscussionPost.GetPostHistoryParameters): Jahannam.DiscussionPost.GetPostHistoryReturnType
 	}
 
+	CommunityPage: {
+		getAllAdminsData(opts: Jahannam.CommunityPage.GetAllAdminsDataParameters): Jahannam.CommunityPage.GetAllAdminsDataReturnType
+		getAllMembersData(opts: Jahannam.CommunityPage.GetAllMembersDataParameters): Jahannam.CommunityPage.GetAllMembersDataReturnType
+		getTopContributorsData(opts: Jahannam.CommunityPage.GetTopContributorsDataParameters): Jahannam.CommunityPage.GetTopContributorsDataReturnType
+	}
+
 	UserProfile: {
 		getUserData(opts: Jahannam.UserProfile.GetUserDataParameters): Jahannam.UserProfile.GetUserDataReturnType
 	}
@@ -54,8 +60,23 @@ export declare class Jahannam {
 
 export declare namespace Jahannam {
 	type APIReturnType<T = any> = Promise<false | T>
+
 	/** what the heck */
 	type APIBoolString = '0' | '1'
+
+	type APIMemberObject = {
+		avatar: string
+		contributions: number
+		contributionsText: string
+		isAdmin: boolean
+		isCurrent: boolean
+		latestRevision: string
+		profileUrl: string
+		timeAgo: string
+		userContactPage: string
+		userId: string
+		userName: string
+	}
 
 	interface Config {
 		cityId: number
@@ -144,6 +165,51 @@ export declare namespace Jahannam {
 				username: string
 				website: string
 			}
+		}>
+	}
+
+	namespace CommunityPage {
+		interface GetAllAdminsDataParameters {
+			uselang: string
+		}
+
+		type GetAllAdminsDataReturnType = APIReturnType<{
+			allAdminsCount: string
+			allAdminsLegend: string
+			allAdminsList: APIMemberObject[]
+			noAdminContactText: string
+			noAdminHref: string
+			noAdminText: string
+			topAdminsHeaderText: string
+		}>
+
+		interface GetAllMembersDataParameters {
+			uselang: string
+		}
+
+		type GetAllMembersDataReturnType = APIReturnType<{
+			admin: string
+			allContributorsLegend: string
+			allMembersHeaderText: string
+			haveMoreMembers: string
+			joinedText: string
+			members: APIMemberObject[]
+			membersCount: string
+			moreMembersLink: string
+			moreMembersText: string
+			noMembersText: string
+		}>
+
+		interface GetTopContributorsDataParameters {
+			uselang: string
+		}
+
+		type GetTopContributorsDataReturnType = APIReturnType<{
+			admin: string
+			anonText: string
+			contributors: APIMemberObject[]
+			currentUser: APIMemberObject
+			noContribsText: string
 		}>
 	}
 
