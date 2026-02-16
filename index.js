@@ -64,10 +64,6 @@
 				}
 			}
 
-			// readonly
-			Object.freeze(this.cfg);
-			Object.freeze(this.cfg.endpoints);
-
 			/**
 			 * @type {import('./index.d.ts').Jahannam['util']}
 			 * @namespace
