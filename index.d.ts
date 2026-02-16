@@ -55,6 +55,7 @@ export declare class Jahannam {
 
 	UserProfile: {
 		getUserData(opts: Jahannam.UserProfile.GetUserDataParameters): Jahannam.UserProfile.GetUserDataReturnType
+		getDefaultAvatars(opts: Jahannam.UserProfile.GetDefaultAvatarsParameters): Jahannam.UserProfile.GetDefaultAvatarsReturnType
 	}
 }
 
@@ -165,6 +166,13 @@ export declare namespace Jahannam {
 				username: string
 				website: string
 			}
+		}>
+
+		interface GetDefaultAvatarsParameters { }
+
+		type GetDefaultAvatarsReturnType = APIReturnType<{
+			avatars: string[]
+			status: boolean
 		}>
 	}
 

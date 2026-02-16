@@ -215,7 +215,14 @@
 						method: 'getUserData',
 						parameters: { 'userId': userId.toString() }
 					});
-				}
+				},
+
+				getDefaultAvatars: () => {
+					return this.util.get({
+						controller: 'UserProfile',
+						method: 'getDefaultAvatars'
+					});
+				},
 			};
 
 			/**
