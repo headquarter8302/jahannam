@@ -4,7 +4,6 @@
  * @description	Library for interacting with the Nirvana backend, a.k.a `wikia.php`
  * @license	MIT
  * @license	CC-BY-SA-3.0 Caburum for the Nirvana docs (https://caburum.fandom.com/wiki/Nirvana)
- * @version	v0
  * <nowiki>
  */
 
