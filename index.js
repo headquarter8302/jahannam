@@ -291,6 +291,61 @@
 				},
 			};
 
+			/**
+			 * Fandom\ArticleComments\Api\ArticleComments
+			 * @type {import('./index.d.ts').Jahannam['ArticleComments']}
+			 * @namespace
+			 */
+			this.ArticleComments = {
+				getCommentCount: ({
+					namespace,
+					title,
+					hideDeleted
+				}) => {
+					return this.util.get({
+						controller: 'ArticleComments',
+						method: 'getCommentCount',
+						parameters: {
+							'namespace': namespace.toString(),
+							title: title,
+							hideDeleted: hideDeleted.toString()
+						}
+					})
+				},
+
+				getThread: ({
+					threadId,
+					namespace,
+					title
+				}) => {
+					return this.util.get({
+						controller: 'ArticleComments',
+						method: 'getThread',
+						parameters: {
+							'threadId': threadId.toString(),
+							'namespace': namespace.toString(),
+							'title': title
+						}
+					})
+				},
+
+				getComments: ({
+					namespace,
+					title,
+					hideDeleted
+				}) => {
+					return this.util.get({
+						controller: 'ArticleComments',
+						method: 'getComments',
+						parameters: {
+							'namespace': namespace.toString(),
+							title: title,
+							hideDeleted: hideDeleted.toString()
+						}
+					})
+				}
+			}
+
 			debug("Instanced");
 		}
 	}

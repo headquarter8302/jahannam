@@ -57,6 +57,12 @@ export declare class Jahannam {
 		getUserData(opts: Jahannam.UserProfile.GetUserDataParameters): Jahannam.UserProfile.GetUserDataReturnType
 		getDefaultAvatars(opts: Jahannam.UserProfile.GetDefaultAvatarsParameters): Jahannam.UserProfile.GetDefaultAvatarsReturnType
 	}
+
+	ArticleComments: {
+		getCommentCount(opts: Jahannam.ArticleComments.GetCommentCountParameters): Jahannam.ArticleComments.GetCommentCountReturnType
+		getThread(opts: Jahannam.ArticleComments.GetThreadParameters): Jahannam.ArticleComments.GetThreadReturnType
+		getComments(opts: Jahannam.ArticleComments.GetCommentsParameters): Jahannam.ArticleComments.GetCommentsReturnType
+	}
 }
 
 export declare namespace Jahannam {
@@ -77,6 +83,49 @@ export declare namespace Jahannam {
 		userContactPage: string
 		userId: string
 		userName: string
+	}
+
+	type APIThreadCreationDateObject = {
+		epochSecond: number
+		nano: number | 0
+	}
+
+	type APIThreadUserPermissions = {
+		canDelete: boolean
+		canEdit: boolean
+	}
+
+	type APIThreadObject = {
+		containerId: string
+		creationDate: APIThreadCreationDateObject
+		firstPost: {
+			attachments: {
+				atMentions: []
+				contentImages: []
+				openGraphs: []
+				polls: []
+				quizzes: []
+			}
+			createdBy: {
+				avatarUrl: string
+				badgePermission: string
+				id: string
+				name: string
+			}
+			creationDate: APIThreadCreationDateObject
+			id: string
+			jsonModel: string
+			upvoteCount: number
+			userData: {
+				hasUpvoted: boolean
+				isReported: boolean
+				permissions: APIThreadUserPermissions
+			}
+		}
+		followed: boolean
+		id: string
+		postId: string
+		posts: []
 	}
 
 	interface Config {
@@ -283,6 +332,36 @@ export declare namespace Jahannam {
 			user_name: string
 			user_real_name: string
 			user_registration: string
+		}>
+	}
+
+	namespace ArticleComments {
+		interface GetCommentCountParameters {
+			namespace: number
+			title: string
+			hideDeleted: boolean
+		}
+
+		interface GetThreadParameters {
+			threadId: number
+			namespace: number
+			title: string
+		}
+
+		interface GetCommentsParameters {
+			namespace: number
+			title: string
+			hideDeleted: boolean
+		}
+
+		type GetCommentsReturnType = APIReturnType<{
+			links: []
+			readOnlyMode: boolean
+			reportedData: {
+				posts: []
+			}
+			threads: APIThreadObject[]
+			totalCount: number
 		}>
 	}
 
