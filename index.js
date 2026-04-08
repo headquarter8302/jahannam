@@ -18,7 +18,7 @@
 
 	/**
 	 * @param {any} msg
-	 * @param {any} [data]
+	 * @param {any} data
 	 * @returns {false}
 	*/
 	function error(msg, ...data) {
@@ -28,7 +28,6 @@
 
 	// @ts-expect-error
 	(window.dev = window.dev || {}).jahannam = {};
-	// @ts-expect-error
 	window.dev.jahannam.cfg = window.dev.jahannam.cfg || {};
 
 	debug(version);
