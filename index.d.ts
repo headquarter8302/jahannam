@@ -36,32 +36,32 @@ export declare class Jahannam {
 	}
 
 	DWDimensionApi: {
-		getWikis(opts: Jahannam.DWDimensionApi.GetWikisParameters): Jahannam.DWDimensionApi.GetWikisReturnType
-		getAllArticles(opts: Jahannam.DWDimensionApi.GetAllArticlesParameters): Jahannam.DWDimensionApi.GetAllArticlesReturnType
-		getUsers(opts: Jahannam.DWDimensionApi.GetUsersParameters): Jahannam.DWDimensionApi.GetUsersReturnType
+		getWikis(opts: Jahannam.DWDimensionApi.GetWikis.Parameters): Jahannam.DWDimensionApi.GetWikis.ReturnType
+		getAllArticles(opts: Jahannam.DWDimensionApi.GetAllArticles.Parameters): Jahannam.DWDimensionApi.GetAllArticles.ReturnType
+		getUsers(opts: Jahannam.DWDimensionApi.GetUsers.Parameters): Jahannam.DWDimensionApi.GetUsers.ReturnType
 	}
 
 	DiscussionPost: {
 		// TODO: inspect return type
-		getPost(opts: Jahannam.DiscussionPost.GetPostParameters): Jahannam.DiscussionPost.GetPostReturnType
-		getPostHistory(opts: Jahannam.DiscussionPost.GetPostHistoryParameters): Jahannam.DiscussionPost.GetPostHistoryReturnType
+		getPost(opts: Jahannam.DiscussionPost.GetPost.Parameters): Jahannam.DiscussionPost.GetPost.ReturnType
+		getPostHistory(opts: Jahannam.DiscussionPost.GetPostHistory.Parameters): Jahannam.DiscussionPost.GetPostHistory.ReturnType
 	}
 
 	CommunityPage: {
-		getAllAdminsData(opts: Jahannam.CommunityPage.GetAllAdminsDataParameters): Jahannam.CommunityPage.GetAllAdminsDataReturnType
-		getAllMembersData(opts: Jahannam.CommunityPage.GetAllMembersDataParameters): Jahannam.CommunityPage.GetAllMembersDataReturnType
-		getTopContributorsData(opts: Jahannam.CommunityPage.GetTopContributorsDataParameters): Jahannam.CommunityPage.GetTopContributorsDataReturnType
+		getAllAdminsData(opts: Jahannam.CommunityPage.GetAllAdminsData.Parameters): Jahannam.CommunityPage.GetAllAdminsData.ReturnType
+		getAllMembersData(opts: Jahannam.CommunityPage.GetAllMembersData.Parameters): Jahannam.CommunityPage.GetAllMembersData.ReturnType
+		getTopContributorsData(opts: Jahannam.CommunityPage.GetTopContributorsData.Parameters): Jahannam.CommunityPage.GetTopContributorsData.ReturnType
 	}
 
 	UserProfile: {
-		getUserData(opts: Jahannam.UserProfile.GetUserDataParameters): Jahannam.UserProfile.GetUserDataReturnType
-		getDefaultAvatars(opts: Jahannam.UserProfile.GetDefaultAvatarsParameters): Jahannam.UserProfile.GetDefaultAvatarsReturnType
+		getUserData(opts: Jahannam.UserProfile.GetUserData.Parameters): Jahannam.UserProfile.GetUserData.ReturnType
+		getDefaultAvatars(opts: Jahannam.UserProfile.GetDefaultAvatars.Parameters): Jahannam.UserProfile.GetDefaultAvatars.ReturnType
 	}
 
 	ArticleComments: {
-		getCommentCount(opts: Jahannam.ArticleComments.GetCommentCountParameters): Jahannam.ArticleComments.GetCommentCountReturnType
-		getThread(opts: Jahannam.ArticleComments.GetThreadParameters): Jahannam.ArticleComments.GetThreadReturnType
-		getComments(opts: Jahannam.ArticleComments.GetCommentsParameters): Jahannam.ArticleComments.GetCommentsReturnType
+		getCommentCount(opts: Jahannam.ArticleComments.GetCommentCount.Parameters): Jahannam.ArticleComments.GetCommentCount.ReturnType
+		getThread(opts: Jahannam.ArticleComments.GetThread.Parameters): Jahannam.ArticleComments.GetThread.ReturnType
+		getComments(opts: Jahannam.ArticleComments.GetComments.Parameters): Jahannam.ArticleComments.GetComments.ReturnType
 	}
 }
 
@@ -149,220 +149,252 @@ export declare namespace Jahannam {
 	}
 
 	namespace DiscussionPost {
-		interface GetPostParameters {
-			postId: number
+		namespace GetPost {
+			interface Parameters {
+				postId: number
+			}
+
+			// TODO: fill this
+			interface ReturnType {
+
+			}
 		}
 
-		// TODO: fill this
-		interface GetPostReturnType {
+		namespace GetPostHistory {
+			interface Parameters {
+				postId: number
+			}
 
-		}
+			// TODO: fill this
+			interface ReturnType {
 
-		interface GetPostHistoryParameters {
-			postId: number
-		}
-
-		// TODO: fill this
-		interface GetPostHistoryReturnType {
-
+			}
 		}
 	}
 
 	namespace UserProfile {
-		interface GetUserDataParameters {
-			userId: number
+		namespace GetUserData {
+			interface Parameters {
+				userId: number
+			}
+
+			type ReturnType = APIReturnType<{
+				isReadOnly: boolean
+				userData: {
+					avatar: `https://static.wikia.nocookie.net/${string}`
+					bio: string
+					canEditProfile: boolean
+					canRemoveAvatar: boolean
+					contributionsUrl: string
+					discordHandle: string
+					discussionUserUrl: `/f/u/${string}`
+					/** String representation. Refer to the `localEdits` prop for the integer value */
+					edits: string
+					/**
+					 * TODO: template type this
+					 */
+					fbPage: string
+					hideEditsWikis: any | null
+					id: number
+					isBlocked: boolean
+					isMessageWallBlocked: boolean
+					isUserPageOwner: boolean
+					localEdits: number
+					/** templated? */
+					messageWallNewMessageUrl: string
+					/** templated? */
+					messageWallUrl: string
+					name: string
+					posts: number
+					registration: string
+					showZeroStates: number
+					tags: string[]
+					/**
+					 * TODO: template type this
+					 */
+					twitter: string
+					/** templated? */
+					userBlogUrl: string
+					/** templated? */
+					userProfileActivityUrl: string
+					username: string
+					website: string
+				}
+			}>
 		}
 
-		type GetUserDataReturnType = APIReturnType<{
-			isReadOnly: boolean
-			userData: {
-				avatar: `https://static.wikia.nocookie.net/${string}`
-				bio: string
-				canEditProfile: boolean
-				canRemoveAvatar: boolean
-				contributionsUrl: string
-				discordHandle: string
-				discussionUserUrl: `/f/u/${string}`
-				/** String representation. Refer to the `localEdits` prop for the integer value */
-				edits: string
-				/**
-				 * TODO: template type this
-				 */
-				fbPage: string
-				hideEditsWikis: any | null
-				id: number
-				isBlocked: boolean
-				isMessageWallBlocked: boolean
-				isUserPageOwner: boolean
-				localEdits: number
-				/** templated? */
-				messageWallNewMessageUrl: string
-				/** templated? */
-				messageWallUrl: string
-				name: string
-				posts: number
-				registration: string
-				showZeroStates: number
-				tags: string[]
-				/**
-				 * TODO: template type this
-				 */
-				twitter: string
-				/** templated? */
-				userBlogUrl: string
-				/** templated? */
-				userProfileActivityUrl: string
-				username: string
-				website: string
-			}
-		}>
+		namespace GetDefaultAvatars {
+			interface Parameters { }
 
-		interface GetDefaultAvatarsParameters { }
-
-		type GetDefaultAvatarsReturnType = APIReturnType<{
-			avatars: string[]
-			status: boolean
-		}>
+			type ReturnType = APIReturnType<{
+				avatars: string[]
+				status: boolean
+			}>
+		}
 	}
 
 	namespace CommunityPage {
-		interface GetAllAdminsDataParameters {
-			uselang: string
+		namespace GetAllAdminsData {
+			interface Parameters {
+				uselang: string
+			}
+
+			type ReturnType = APIReturnType<{
+				allAdminsCount: string
+				allAdminsLegend: string
+				allAdminsList: APIMemberObject[]
+				noAdminContactText: string
+				noAdminHref: string
+				noAdminText: string
+				topAdminsHeaderText: string
+			}>
 		}
 
-		type GetAllAdminsDataReturnType = APIReturnType<{
-			allAdminsCount: string
-			allAdminsLegend: string
-			allAdminsList: APIMemberObject[]
-			noAdminContactText: string
-			noAdminHref: string
-			noAdminText: string
-			topAdminsHeaderText: string
-		}>
+		namespace GetAllMembersData {
+			interface Parameters {
+				uselang: string
+			}
 
-		interface GetAllMembersDataParameters {
-			uselang: string
+			type ReturnType = APIReturnType<{
+				admin: string
+				allContributorsLegend: string
+				allMembersHeaderText: string
+				haveMoreMembers: string
+				joinedText: string
+				members: APIMemberObject[]
+				membersCount: string
+				moreMembersLink: string
+				moreMembersText: string
+				noMembersText: string
+			}>
 		}
 
-		type GetAllMembersDataReturnType = APIReturnType<{
-			admin: string
-			allContributorsLegend: string
-			allMembersHeaderText: string
-			haveMoreMembers: string
-			joinedText: string
-			members: APIMemberObject[]
-			membersCount: string
-			moreMembersLink: string
-			moreMembersText: string
-			noMembersText: string
-		}>
+		namespace GetTopContributorsData {
+			interface Parameters {
+				uselang: string
+			}
 
-		interface GetTopContributorsDataParameters {
-			uselang: string
+			type ReturnType = APIReturnType<{
+				admin: string
+				anonText: string
+				contributors: APIMemberObject[]
+				currentUser: APIMemberObject
+				noContribsText: string
+			}>
 		}
-
-		type GetTopContributorsDataReturnType = APIReturnType<{
-			admin: string
-			anonText: string
-			contributors: APIMemberObject[]
-			currentUser: APIMemberObject
-			noContribsText: string
-		}>
 	}
 
 	namespace DWDimensionApi {
-		interface GetWikisParameters {
-			limit?: number
-			after_wiki_id?: number
+		namespace GetWikis {
+			interface Parameters {
+				limit?: number
+				after_wiki_id?: number
+			}
+
+			type ReturnType = APIReturnType<{
+				cluster: string
+				created_at: string
+				dbname: string
+				deleted: string
+				domain: string
+				/** TODO */
+				fc_community_id: unknown
+				founding_user_id: string
+				is_kid_wiki: APIBoolString
+				is_kid_wiki_by_founder: APIBoolString
+				is_kid_wiki_by_staff: APIBoolString
+				is_monetized: APIBoolString
+				is_test_wiki: APIBoolString
+				lang: string
+				lang_id: string
+				public: APIBoolString
+				sitename: string
+				title: string
+				/** Warning: Might or might not be `http` instead of `https` */
+				url: string
+				vertical_id: string
+				vertical_name: string
+				wiki_id: string
+				wiki_manager: string
+			}[]>
 		}
 
-		interface GetAllArticlesParameters {
-			limit?: number
-			starting_wiki_id?: number
+		namespace GetAllArticles {
+			interface Parameters {
+				limit?: number
+				starting_wiki_id?: number
+			}
+
+			type ReturnType = APIReturnType<{
+				article_id: string
+				created_at: string
+				is_redirect: APIBoolString
+				namespace_id: string
+				title: string
+				wiki_id: string
+			}[]>
 		}
 
-		interface GetUsersParameters {
-			limit?: number
-			after_user_id?: number
+		namespace GetUsers {
+			interface Parameters {
+				limit?: number
+				after_user_id?: number
+			}
+
+			type Type = APIReturnType<{
+				is_bot: boolean
+				is_bot_global: boolean
+				user_editcount: string
+				user_email_authenticated: string
+				user_id: string
+				user_marketingallowed: boolean
+				user_name: string
+				user_real_name: string
+				user_registration: string
+			}>
 		}
-
-		type GetWikisReturnType = APIReturnType<{
-			cluster: string
-			created_at: string
-			dbname: string
-			deleted: string
-			domain: string
-			/** TODO */
-			fc_community_id: unknown
-			founding_user_id: string
-			is_kid_wiki: APIBoolString
-			is_kid_wiki_by_founder: APIBoolString
-			is_kid_wiki_by_staff: APIBoolString
-			is_monetized: APIBoolString
-			is_test_wiki: APIBoolString
-			lang: string
-			lang_id: string
-			public: APIBoolString
-			sitename: string
-			title: string
-			/** Warning: Might or might not be `http` instead of `https` */
-			url: string
-			vertical_id: string
-			vertical_name: string
-			wiki_id: string
-			wiki_manager: string
-		}[]>
-
-		type GetAllArticlesReturnType = APIReturnType<{
-			article_id: string
-			created_at: string
-			is_redirect: APIBoolString
-			namespace_id: string
-			title: string
-			wiki_id: string
-		}[]>
-
-		type GetUsersReturnType = APIReturnType<{
-			is_bot: boolean
-			is_bot_global: boolean
-			user_editcount: string
-			user_email_authenticated: string
-			user_id: string
-			user_marketingallowed: boolean
-			user_name: string
-			user_real_name: string
-			user_registration: string
-		}>
 	}
 
 	namespace ArticleComments {
-		interface GetCommentCountParameters {
-			namespace: number
-			title: string
-			hideDeleted: boolean
-		}
-
-		interface GetThreadParameters {
-			threadId: number
-			namespace: number
-			title: string
-		}
-
-		interface GetCommentsParameters {
-			namespace: number
-			title: string
-			hideDeleted: boolean
-		}
-
-		type GetCommentsReturnType = APIReturnType<{
-			links: []
-			readOnlyMode: boolean
-			reportedData: {
-				posts: []
+		namespace GetCommentCount {
+			interface Parameters {
+				namespace: number
+				title: string
+				hideDeleted: boolean
 			}
-			threads: APIThreadObject[]
-			totalCount: number
-		}>
+
+			// TODO
+			type ReturnType = APIReturnType
+		}
+
+		namespace GetThread {
+			interface Parameters {
+				threadId: number
+				namespace: number
+				title: string
+			}
+
+			// TODO
+			type ReturnType = APIReturnType
+		}
+
+		namespace GetComments {
+			interface Parameters {
+				namespace: number
+				title: string
+				hideDeleted: boolean
+			}
+
+			type ReturnType = APIReturnType<{
+				links: []
+				readOnlyMode: boolean
+				reportedData: {
+					posts: []
+				}
+				threads: APIThreadObject[]
+				totalCount: number
+			}>
+		}
 	}
 
 	interface Runtime extends Jahannam {
