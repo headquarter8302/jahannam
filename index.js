@@ -110,6 +110,45 @@
 						})
 				},
 
+				post: ({
+					url = this.cfg.endpoints.wikia,
+					controller,
+					method,
+					format = 'json',
+					parameters = {}
+				}) => {
+					if (
+						!controller
+						|| !method
+					) return Promise.resolve(error("Invalid parameter on 'post()'"))
+
+					const fullURL = this.util.createURL(url, {
+						controller,
+						method,
+						format,
+						parameters
+					})
+
+					const isCors = url.origin !== window.location.origin
+
+					/** @type {RequestInit} */
+					const fetchParams = {
+						cache: 'no-cache',
+						method: 'POST',
+						credentials: 'same-origin',
+						mode: isCors ? 'cors' : 'same-origin'
+					}
+
+					return fetch(fullURL, fetchParams)
+						.then(response => {
+							if (!response.ok) return error("Request error:", response.statusText, response.status)
+							return response.json()
+						})
+						.catch(reason => {
+							return error("Request error", reason.message)
+						})
+				},
+
 				/**
 				 * Creates a URL with the given kv pair of URL parameters
 				 * @method createURL
