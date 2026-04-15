@@ -64,6 +64,12 @@ export declare class Jahannam {
 		getThread(opts: Jahannam.ArticleComments.GetThread.Parameters): Jahannam.ArticleComments.GetThread.ReturnType
 		getComments(opts: Jahannam.ArticleComments.GetComments.Parameters): Jahannam.ArticleComments.GetComments.ReturnType
 	}
+
+	ArticleComments: {
+		getCommentCount(opts: Jahannam.ArticleComments.GetCommentCountParameters): Jahannam.ArticleComments.GetCommentCountReturnType
+		getThread(opts: Jahannam.ArticleComments.GetThreadParameters): Jahannam.ArticleComments.GetThreadReturnType
+		getComments(opts: Jahannam.ArticleComments.GetCommentsParameters): Jahannam.ArticleComments.GetCommentsReturnType
+	}
 }
 
 export declare namespace Jahannam {
@@ -403,6 +409,36 @@ export declare namespace Jahannam {
 				totalCount: number
 			}>
 		}
+	}
+
+	namespace ArticleComments {
+		interface GetCommentCountParameters {
+			namespace: number
+			title: string
+			hideDeleted: boolean
+		}
+
+		interface GetThreadParameters {
+			threadId: number
+			namespace: number
+			title: string
+		}
+
+		interface GetCommentsParameters {
+			namespace: number
+			title: string
+			hideDeleted: boolean
+		}
+
+		type GetCommentsReturnType = APIReturnType<{
+			links: []
+			readOnlyMode: boolean
+			reportedData: {
+				posts: []
+			}
+			threads: APIThreadObject[]
+			totalCount: number
+		}>
 	}
 
 	interface Runtime extends Jahannam {
