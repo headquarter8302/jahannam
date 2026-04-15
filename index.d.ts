@@ -29,6 +29,7 @@ export declare class Jahannam {
 
 	util: {
 		get(opts: Jahannam.Util.GetOptions): Jahannam.APIReturnType
+		post(opts: Jahannam.Util.PostOptions): Jahannam.APIReturnType
 		createURL(
 			baseURL: URL,
 			paramPair?: Record<string, string | Record<string, string>>
@@ -138,13 +139,20 @@ export declare namespace Jahannam {
 	}
 
 	namespace Util {
-		interface GetOptions {
+		interface RequestOptions {
 			/** defaults to `cfg.endpoints.wikia` */
 			url?: URL
 			controller: string
 			method: string
 			format?: string
 			parameters?: Record<string, string>
+		}
+
+		interface GetOptions extends RequestOptions {
+		}
+
+		interface PostOptions extends RequestOptions {
+
 		}
 	}
 
