@@ -1,3 +1,4 @@
+/// <reference path="./index.d.ts" />
 /**
  * @name	Jahannam
  * @author	Headquarter8302
@@ -32,14 +33,18 @@
 
 	debug(version)
 
+	/**
+	 * @class Jahannam
+	 * @type {Jahannam}
+	 */
 	class Jahannam {
 		/**
-		 * @param {import('./index.d.ts').Jahannam.Config} cfgInput
+		 * @param {Jahannam.Config} cfgInput
 		*/
 		constructor(cfgInput) {
 			/**
 			 * Holds the configuration for the script. Will be overwritten by the class config input
-			 * @type {import('./index.d.ts').Jahannam['cfg']}
+			 * @type {Jahannam.Config}
 			 * @namespace
 			 */
 			this.cfg = {
@@ -63,7 +68,7 @@
 			}
 
 			/**
-			 * @type {import('./index.d.ts').Jahannam['util']}
+			 * @type {Jahannam.Util}
 			 * @namespace
 			 */
 			this.util = {
@@ -108,6 +113,9 @@
 						.catch(reason => {
 							return error("Request error", reason.message)
 						})
+						.finally(() => {
+							debug(`Done GETing request to: ${controller} ${method}`)
+						})
 				},
 
 				post: ({
@@ -115,7 +123,8 @@
 					controller,
 					method,
 					format = 'json',
-					parameters = {}
+					parameters = {},
+					formData = {},
 				}) => {
 					if (
 						!controller
@@ -129,6 +138,10 @@
 						parameters
 					})
 
+					const body = new URLSearchParams(
+						Object.assign({ token: mediaWiki.user.tokens.get('csrfToken') }, formData)
+					)
+
 					const isCors = url.origin !== window.location.origin
 
 					/** @type {RequestInit} */
@@ -136,7 +149,8 @@
 						cache: 'no-cache',
 						method: 'POST',
 						credentials: 'same-origin',
-						mode: isCors ? 'cors' : 'same-origin'
+						mode: isCors ? 'cors' : 'same-origin',
+						body: body
 					}
 
 					return fetch(fullURL, fetchParams)
@@ -147,6 +161,9 @@
 						.catch(reason => {
 							return error("Request error", reason.message)
 						})
+						.finally(() => {
+							debug(`Done POSTing request to: ${controller} ${method}`)
+						})
 				},
 
 				/**
@@ -155,6 +172,7 @@
 				 */
 				createURL(baseURL, paramPair = {}) {
 					const url = new URL(baseURL)
+
 					for (const [k, v] of Object.entries(paramPair)) {
 						if (v && typeof v === "object") {
 							for (const [param, paramV] of Object.entries(v))
@@ -163,13 +181,16 @@
 						}
 						if (typeof v === "string") url.searchParams.append(k, v)
 					}
+
 					return url
-				}
+				},
+
+				EMPTY_ATTACHMENTS: { "contentImages": [], "openGraphs": [], "atMentions": [] }
 			}
 
 			/**
 			 * DWDimensionApi
-			 * @type {import('./index.d.ts').Jahannam['DWDimensionApi']}
+			 * @type {Jahannam.DWDimensionApi}
 			 * @namespace
 			 */
 			this.DWDimensionApi = {
@@ -236,7 +257,7 @@
 
 			/**
 			 * UserProfile
-			 * @type {import('./index.d.ts').Jahannam['UserProfile']}
+			 * @type {Jahannam.UserProfile}
 			 * @namespace
 			 */
 			this.UserProfile = {
@@ -264,7 +285,7 @@
 
 			/**
 			 * Fandom\CommunityPage\CommunityPage
-			 * @type {import('./index.d.ts').Jahannam['CommunityPage']}
+			 * @type {Jahannam.CommunityPage}
 			 * @namespace
 			 */
 			this.CommunityPage = {
@@ -297,20 +318,20 @@
 
 			/**
 			 * Fandom\FeedsAndPosts\Discussion\DiscussionPost
-			 * @type {import('./index.d.ts').Jahannam['DiscussionPost']}
+			 * @type {Jahannam.DiscussionPost}
 			 * @namespace
 			 */
 			this.DiscussionPost = {
 				/**
 				 * Gets information of a specific post by its ID
-				 * @method getPost
+				 * @method getPosts
 				 */
-				getPost: ({
+				getPosts: ({
 					postId
 				}) => {
 					return this.util.get({
 						controller: 'DiscussionPost',
-						method: 'getPost',
+						method: 'getPosts',
 						parameters: { 'postId': postId.toString() }
 					})
 				},
@@ -332,17 +353,55 @@
 
 			/**
 			 * Fandom\ArticleComments\Api\ArticleComments
-			 * @type {import('./index.d.ts').Jahannam['ArticleComments']}
+			 * @type {Jahannam.ArticleComments}
 			 * @namespace
 			 */
 			this.ArticleComments = {
+				postNewCommentThread: ({
+					title,
+					namespace,
+					jsonModel,
+					attachments
+				}) => {
+					return this.util.post({
+						controller: 'ArticleCommentsController',
+						method: 'postNewCommentThread',
+						formData: {
+							title: title,
+							namespace: namespace.toString(),
+							jsonModel: JSON.stringify(jsonModel),
+							attachments: JSON.stringify(attachments)
+						}
+					})
+				},
+
+				postNewCommentReply: ({
+					threadId,
+					title,
+					namespace,
+					jsonModel,
+					attachments = this.util.EMPTY_ATTACHMENTS
+				}) => {
+					return this.util.post({
+						controller: 'ArticleCommentsController',
+						method: 'postNewCommentReply',
+						formData: {
+							'threadId': threadId.toString(),
+							'title': title,
+							'namespace': namespace.toString(),
+							'jsonModel': JSON.stringify(jsonModel),
+							attachments: JSON.stringify(attachments)
+						}
+					})
+				},
+
 				getCommentCount: ({
 					namespace,
 					title,
 					hideDeleted
 				}) => {
 					return this.util.get({
-						controller: 'ArticleComments',
+						controller: 'ArticleCommentsController',
 						method: 'getCommentCount',
 						parameters: {
 							'namespace': namespace.toString(),
@@ -358,7 +417,7 @@
 					title
 				}) => {
 					return this.util.get({
-						controller: 'ArticleComments',
+						controller: 'ArticleCommentsController',
 						method: 'getThread',
 						parameters: {
 							'threadId': threadId.toString(),
@@ -374,12 +433,30 @@
 					hideDeleted
 				}) => {
 					return this.util.get({
-						controller: 'ArticleComments',
+						controller: 'ArticleCommentsController',
 						method: 'getComments',
 						parameters: {
 							'namespace': namespace.toString(),
 							'title': title,
 							'hideDeleted': hideDeleted.toString()
+						}
+					})
+				},
+
+				deletePost: ({
+					postId,
+					suppressContent,
+					title,
+					namespace
+				}) => {
+					return this.util.post({
+						controller: 'ArticleCommentsController',
+						method: 'deletePost',
+						formData: {
+							'postId': postId.toString(),
+							'suppressContent': suppressContent.toString(),
+							'title': title,
+							'namespace': namespace.toString()
 						}
 					})
 				}
