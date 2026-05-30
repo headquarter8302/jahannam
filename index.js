@@ -173,9 +173,9 @@
 				createURL(baseURL, paramPair = {}) {
 					const url = new URL(baseURL)
 
-					for (const [k, v] of Object.entries(paramPair)) {
+					for (const [ k, v ] of Object.entries(paramPair)) {
 						if (v && typeof v === "object") {
-							for (const [param, paramV] of Object.entries(v))
+							for (const [ param, paramV ] of Object.entries(v))
 								url.searchParams.append(param, paramV)
 							continue
 						}
@@ -206,7 +206,7 @@
 					const params = {
 						'limit': limit.toString(),
 					}
-					if (after_wiki_id) params['after_wiki_id'] = after_wiki_id.toString()
+					if (after_wiki_id) params[ 'after_wiki_id' ] = after_wiki_id.toString()
 					return this.util.get({
 						controller: 'DWDimensionApi',
 						method: 'getWikis',
@@ -226,7 +226,7 @@
 					const params = {
 						'limit': limit.toString(),
 					}
-					if (starting_wiki_id) params['starting_wiki_id'] = starting_wiki_id.toString()
+					if (starting_wiki_id) params[ 'starting_wiki_id' ] = starting_wiki_id.toString()
 					return this.util.get({
 						controller: 'DWDimensionApi',
 						method: 'getAllArticles',
@@ -246,7 +246,7 @@
 					const params = {
 						'limit': limit.toString(),
 					}
-					if (after_user_id) params['after_user_id'] = after_user_id.toString()
+					if (after_user_id) params[ 'after_user_id' ] = after_user_id.toString()
 					return this.util.get({
 						controller: 'DWDimensionApi',
 						method: 'getUsers',
@@ -457,6 +457,20 @@
 							'suppressContent': suppressContent.toString(),
 							'title': title,
 							'namespace': namespace.toString()
+						}
+					})
+				},
+
+				// ! Tentative
+				getArticleTitle: ({
+					stablePageId
+				}) => {
+					return this.util.get({
+						controller: 'ArticleCommentsController',
+						method: 'getArticleTitle',
+						parameters: {
+							// @ts-expect-error
+							'stablePage': stablePageId
 						}
 					})
 				}

@@ -9,6 +9,7 @@ declare global {
             getThread(opts: Jahannam.ArticleComments.GetThread.Parameters): Jahannam.ArticleComments.GetThread.ReturnType
             getComments(opts: Jahannam.ArticleComments.GetComments.Parameters): Jahannam.ArticleComments.GetComments.ReturnType
             deletePost(opts: Jahannam.ArticleComments.DeletePost.Parameters): Jahannam.ArticleComments.DeletePost.ReturnType
+            getArticleTitle(opts: Jahannam.ArticleComments.GetArticleTitle.Parameters): Jahannam.ArticleComments.GetArticleTitle.ReturnType
         }
 
         namespace ArticleComments {
@@ -80,6 +81,14 @@ declare global {
                 }
 
                 type ReturnType = APIReturnType<[]>
+            }
+
+            namespace GetArticleTitle {
+                interface Parameters {
+                    stablePageId: unknown
+                }
+
+                type ReturnType = APIReturnType<unknown>
             }
         }
     }
