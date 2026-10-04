@@ -1,10 +1,10 @@
 /// <reference path="./index.d.ts" />
 /**
- * @name	Jahannam
- * @author	Headquarter8302
- * @description	Library for interacting with the Nirvana backend, a.k.a `wikia.php`
- * @license	MIT
- * @license	CC-BY-SA-3.0 Caburum for the Nirvana docs (https://caburum.fandom.com/wiki/Nirvana)
+ * @name        Jahannam
+ * @author      Headquarter8302
+ * @description Library for interacting with the Nirvana backend, a.k.a `wikia.php`
+ * @license     MIT
+ * @license     CC-BY-SA-3.0 Caburum for the Nirvana docs (https://caburum.fandom.com/wiki/Nirvana)
  * <nowiki>
  */
 
@@ -481,5 +481,4 @@
 	}
 
 	mw.hook('dev.jahannam').fire(window.dev.jahannam.class = Jahannam)
-	return
 })(window, mediaWiki)
