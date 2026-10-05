@@ -12,7 +12,7 @@ declare global {
 			using(modules: string | string[]): Promise<void>
 		}
 		config: {
-			get(key: string): any
+			get(key: string): string
 		}
 		hook: (hook: string) => {
 			fire: (payload: any) => void
@@ -109,10 +109,14 @@ declare global {
 			content: APIPostObject[]
 		}
 
-		type APIPostAttachmentsObject = {
-			contentImages: []
-			openGraphs: []
-			atMentions: []
+		type APIPostAttachmentsObject<
+			ContentImages = unknown,
+			OpenGraphs = unknown,
+			AtMentions = unknown
+		> = {
+			contentImages: ContentImages[]
+			openGraphs: OpenGraphs[]
+			atMentions: AtMentions[]
 		}
 
 		type APIPostBlockObject = {}
