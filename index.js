@@ -38,9 +38,7 @@
 	 * @type {Jahannam}
 	 */
 	class Jahannam {
-		/**
-		 * @param {Jahannam.Config} cfgInput
-		*/
+		/** @param {Jahannam.Config} cfgInput */
 		constructor(cfgInput) {
 			/**
 			 * Holds the configuration for the script. Will be overwritten by the class config input
@@ -48,11 +46,9 @@
 			 * @namespace
 			 */
 			this.cfg = {
-				cityId: mw.config.get('wgCityId'),
+				cityId: Number(mw.config.get('wgCityId')),
 				endpoints: {
-					wikia: new URL('https://'
-						.concat(mw.config.get('wgWikiID'))
-						.concat('.fandom.com/wikia.php')),
+					wikia: new URL(mw.config.get('wgServer').concat('/wikia.php')),
 					service: new URL(mw.config.get('wgServicesExternalDomain')),
 				},
 				version: version
@@ -174,7 +170,7 @@
 					const url = new URL(baseURL)
 
 					for (const [ k, v ] of Object.entries(paramPair)) {
-						if (v && typeof v === "object") {
+						if (typeof v === "object") {
 							for (const [ param, paramV ] of Object.entries(v))
 								url.searchParams.append(param, paramV)
 							continue
@@ -185,6 +181,10 @@
 					return url
 				},
 
+				/**
+				 * Create an empty attachment constant
+				 * @readonly
+				 */
 				EMPTY_ATTACHMENTS: { "contentImages": [], "openGraphs": [], "atMentions": [] }
 			}
 
